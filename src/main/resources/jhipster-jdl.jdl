@@ -1,0 +1,99 @@
+// Définition des entités
+
+/**
+ * L'entité Professeur.
+ */
+entity Professeur {
+    firstName String required
+    lastName String required
+    email String required
+    phoneNumber String
+    hireDate LocalDate
+}
+
+/**
+ * L'entité Etudiant.
+ */
+entity Etudiant {
+    firstName String required
+    lastName String required
+    email String required
+    apogee String required
+    niveau Niveau
+    filere Filiere
+    enrollmentDate LocalDate
+}
+
+/**
+ * L'entité Classe.
+ */
+entity Classe {
+    className String required
+    level String
+    group Groupe
+    niveau Niveau
+    filere Filiere
+}
+
+/**
+ * L'entité Matiere.
+ */
+entity Matiere {
+    subjectName String required
+    description String
+}
+
+// Définition des relations entre les entités
+
+/**
+ * Un professeur peut enseigner plusieurs matières.
+ */
+relationship OneToMany {
+    Professeur{matiere} to Matiere{professeur}
+}
+
+/**
+ * Une classe peut avoir plusieurs étudiants.
+ */
+relationship OneToMany {
+    Classe{etudiant} to Etudiant{classe}
+}
+
+/**
+ * Une classe peut être assignée à plusieurs matières.
+ */
+/**
+*relationship ManyToMany {
+    *Classe{matiere} to Matiere{classe}
+*
+/**
+ * Un professeur peut être assigné à plusieurs classes.
+ */
+relationship ManyToMany {
+    Professeur{classe} to Classe{professeur}
+}
+
+enum Groupe { 
+G1, G2, G3, G4, G5, G6, G7, G8
+}
+
+enum Niveau { 
+PermiereAnnee, DeusiemeAnnee, TroisiemeAnnee
+}
+
+
+
+enum Filiere { 
+GL, BI, IDSIT, IDF, SSE, SSI, IIA, SSCL, GD 
+}
+// Définition des options de pagination
+//paginate Professeur, Etudiant, Classe, Matiere with pagination
+
+// Utilisation des DTO (Data Transfer Objects) avec mapstruct
+//dto * with mapstruct
+
+// Définition des options de service
+//service all with serviceImpl
+
+// Définition d'un suffixe Angular (si nécessaire)
+// angularSuffix * with mySuffix

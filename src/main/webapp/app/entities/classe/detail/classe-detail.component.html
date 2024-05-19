@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (classe()) {
+      <div>
+        <h2 data-cy="classeDetailsHeading"><span jhiTranslate="agileProjectApp.classe.detail.title">Classe</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ classe()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.classe.className">Class Name</span></dt>
+          <dd>
+            <span>{{ classe()!.className }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.classe.level">Level</span></dt>
+          <dd>
+            <span>{{ classe()!.level }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.classe.group">Group</span></dt>
+          <dd>
+            <span [jhiTranslate]="'agileProjectApp.Groupe.' + (classe()!.group ?? 'null')">{{
+              { null: '', G1: 'G1', G2: 'G2', G3: 'G3', G4: 'G4', G5: 'G5', G6: 'G6', G7: 'G7', G8: 'G8' }[classe()!.group ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.classe.niveau">Niveau</span></dt>
+          <dd>
+            <span [jhiTranslate]="'agileProjectApp.Niveau.' + (classe()!.niveau ?? 'null')">{{
+              { null: '', PermiereAnnee: 'PermiereAnnee', DeusiemeAnnee: 'DeusiemeAnnee', TroisiemeAnnee: 'TroisiemeAnnee' }[
+                classe()!.niveau ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.classe.filere">Filere</span></dt>
+          <dd>
+            <span [jhiTranslate]="'agileProjectApp.Filiere.' + (classe()!.filere ?? 'null')">{{
+              { null: '', GL: 'GL', BI: 'BI', IDSIT: 'IDSIT', IDF: 'IDF', SSE: 'SSE', SSI: 'SSI', IIA: 'IIA', SSCL: 'SSCL', GD: 'GD' }[
+                classe()!.filere ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.classe.professeur">Professeur</span></dt>
+          <dd>
+            @for (professeur of classe()!.professeurs; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/professeur', professeur.id, 'view']">{{ professeur?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/classe', classe()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

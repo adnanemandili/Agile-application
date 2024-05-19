@@ -1,0 +1,10 @@
+{
+  "agileProjectApp": {
+    "Niveau": {
+      "null": "",
+      "PermiereAnnee": "PermiereAnnee",
+      "DeusiemeAnnee": "DeusiemeAnnee",
+      "TroisiemeAnnee": "TroisiemeAnnee"
+    }
+  }
+}

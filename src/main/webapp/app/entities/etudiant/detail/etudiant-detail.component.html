@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (etudiant()) {
+      <div>
+        <h2 data-cy="etudiantDetailsHeading"><span jhiTranslate="agileProjectApp.etudiant.detail.title">Etudiant</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ etudiant()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ etudiant()!.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ etudiant()!.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.email">Email</span></dt>
+          <dd>
+            <span>{{ etudiant()!.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.apogee">Apogee</span></dt>
+          <dd>
+            <span>{{ etudiant()!.apogee }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.niveau">Niveau</span></dt>
+          <dd>
+            <span [jhiTranslate]="'agileProjectApp.Niveau.' + (etudiant()!.niveau ?? 'null')">{{
+              { null: '', PermiereAnnee: 'PermiereAnnee', DeusiemeAnnee: 'DeusiemeAnnee', TroisiemeAnnee: 'TroisiemeAnnee' }[
+                etudiant()!.niveau ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.filere">Filere</span></dt>
+          <dd>
+            <span [jhiTranslate]="'agileProjectApp.Filiere.' + (etudiant()!.filere ?? 'null')">{{
+              { null: '', GL: 'GL', BI: 'BI', IDSIT: 'IDSIT', IDF: 'IDF', SSE: 'SSE', SSI: 'SSI', IIA: 'IIA', SSCL: 'SSCL', GD: 'GD' }[
+                etudiant()!.filere ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.enrollmentDate">Enrollment Date</span></dt>
+          <dd>
+            <span>{{ etudiant()!.enrollmentDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.etudiant.classe">Classe</span></dt>
+          <dd>
+            @if (etudiant()!.classe) {
+              <div>
+                <a [routerLink]="['/classe', etudiant()!.classe?.id, 'view']">{{ etudiant()!.classe?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/etudiant', etudiant()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-classe-heading" data-cy="ClasseCreateUpdateHeading" jhiTranslate="agileProjectApp.classe.home.createOrEditLabel">
+        Create or edit a Classe
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="agileProjectApp.classe.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_className" jhiTranslate="agileProjectApp.classe.className">Class Name</label>
+          <input type="text" class="form-control" name="className" id="field_className" data-cy="className" formControlName="className" />
+          @if (editForm.get('className')!.invalid && (editForm.get('className')!.dirty || editForm.get('className')!.touched)) {
+            <div>
+              @if (editForm.get('className')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_level" jhiTranslate="agileProjectApp.classe.level">Level</label>
+          <input type="text" class="form-control" name="level" id="field_level" data-cy="level" formControlName="level" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_group" jhiTranslate="agileProjectApp.classe.group">Group</label>
+          <select class="form-control" name="group" formControlName="group" id="field_group" data-cy="group">
+            <option [ngValue]="null">{{ 'agileProjectApp.Groupe.null' | translate }}</option>
+            @for (groupe of groupeValues; track $index) {
+              <option [value]="groupe">{{ 'agileProjectApp.Groupe.' + groupe | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_niveau" jhiTranslate="agileProjectApp.classe.niveau">Niveau</label>
+          <select class="form-control" name="niveau" formControlName="niveau" id="field_niveau" data-cy="niveau">
+            <option [ngValue]="null">{{ 'agileProjectApp.Niveau.null' | translate }}</option>
+            @for (niveau of niveauValues; track $index) {
+              <option [value]="niveau">{{ 'agileProjectApp.Niveau.' + niveau | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_filere" jhiTranslate="agileProjectApp.classe.filere">Filere</label>
+          <select class="form-control" name="filere" formControlName="filere" id="field_filere" data-cy="filere">
+            <option [ngValue]="null">{{ 'agileProjectApp.Filiere.null' | translate }}</option>
+            @for (filiere of filiereValues; track $index) {
+              <option [value]="filiere">{{ 'agileProjectApp.Filiere.' + filiere | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_professeurs" jhiTranslate="agileProjectApp.classe.professeur">Professeur</label>
+          <select
+            class="form-control"
+            id="field_professeurs"
+            data-cy="professeur"
+            multiple
+            name="professeurs"
+            formControlName="professeurs"
+            [compareWith]="compareProfesseur"
+          >
+            @for (professeurOption of professeursSharedCollection; track $index) {
+              <option [ngValue]="professeurOption">{{ professeurOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

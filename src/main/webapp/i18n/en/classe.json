@@ -1,0 +1,30 @@
+{
+  "agileProjectApp": {
+    "classe": {
+      "home": {
+        "title": "Classes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Classe",
+        "createOrEditLabel": "Create or edit a Classe",
+        "notFound": "No Classes found"
+      },
+      "created": "A new Classe is created with identifier {{ param }}",
+      "updated": "A Classe is updated with identifier {{ param }}",
+      "deleted": "A Classe is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Classe {{ id }}?"
+      },
+      "detail": {
+        "title": "Classe"
+      },
+      "id": "ID",
+      "className": "Class Name",
+      "level": "Level",
+      "group": "Group",
+      "niveau": "Niveau",
+      "filere": "Filere",
+      "etudiant": "Etudiant",
+      "professeur": "Professeur"
+    }
+  }
+}

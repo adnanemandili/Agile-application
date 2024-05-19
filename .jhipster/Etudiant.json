@@ -1,0 +1,54 @@
+{
+  "annotations": {
+    "changelogDate": "20240519163636"
+  },
+  "applications": "*",
+  "documentation": "L'entité Etudiant.",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "apogee",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "niveau",
+      "fieldType": "Niveau",
+      "fieldValues": "PermiereAnnee,DeusiemeAnnee,TroisiemeAnnee"
+    },
+    {
+      "fieldName": "filere",
+      "fieldType": "Filiere",
+      "fieldValues": "GL,BI,IDSIT,IDF,SSE,SSI,IIA,SSCL,GD"
+    },
+    {
+      "fieldName": "enrollmentDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "name": "Etudiant",
+  "relationships": [
+    {
+      "otherEntityName": "classe",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "classe",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

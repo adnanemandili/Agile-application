@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20240519163637"
+  },
+  "applications": "*",
+  "documentation": "L'entité Matiere.",
+  "fields": [
+    {
+      "fieldName": "subjectName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Matiere",
+  "relationships": [
+    {
+      "otherEntityName": "professeur",
+      "otherEntityRelationshipName": "matiere",
+      "relationshipName": "professeur",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

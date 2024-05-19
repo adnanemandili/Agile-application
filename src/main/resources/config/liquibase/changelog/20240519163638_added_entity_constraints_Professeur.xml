@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Professeur.
+    -->
+    <changeSet id="20240519163638-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="professeur_id"
+                                 baseTableName="rel_professeur__classe"
+                                 constraintName="fk_rel_professeur__classe__professeur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="professeur"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="classe_id"
+                                 baseTableName="rel_professeur__classe"
+                                 constraintName="fk_rel_professeur__classe__classe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="classe"
+                                 />
+    </changeSet>
+</databaseChangeLog>

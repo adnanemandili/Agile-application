@@ -1,0 +1,159 @@
+<div>
+  <h2 id="page-heading" data-cy="EtudiantHeading">
+    <span jhiTranslate="agileProjectApp.etudiant.home.title">Etudiants</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="agileProjectApp.etudiant.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-etudiant"
+        [routerLink]="['/etudiant/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="agileProjectApp.etudiant.home.createLabel">Create a new Etudiant</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (etudiants?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="agileProjectApp.etudiant.home.notFound">No Etudiants found</span>
+    </div>
+  }
+
+  @if (etudiants && etudiants.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="firstName">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.firstName">First Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lastName">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.lastName">Last Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="email">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.email">Email</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="apogee">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.apogee">Apogee</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="niveau">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.niveau">Niveau</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="filere">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.filere">Filere</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="enrollmentDate">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.enrollmentDate">Enrollment Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="classe.id">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.etudiant.classe">Classe</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (etudiant of etudiants; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/etudiant', etudiant.id, 'view']">{{ etudiant.id }}</a>
+              </td>
+              <td>{{ etudiant.firstName }}</td>
+              <td>{{ etudiant.lastName }}</td>
+              <td>{{ etudiant.email }}</td>
+              <td>{{ etudiant.apogee }}</td>
+              <td [jhiTranslate]="'agileProjectApp.Niveau.' + (etudiant.niveau ?? 'null')">
+                {{
+                  { null: '', PermiereAnnee: 'PermiereAnnee', DeusiemeAnnee: 'DeusiemeAnnee', TroisiemeAnnee: 'TroisiemeAnnee' }[
+                    etudiant.niveau ?? 'null'
+                  ]
+                }}
+              </td>
+              <td [jhiTranslate]="'agileProjectApp.Filiere.' + (etudiant.filere ?? 'null')">
+                {{
+                  { null: '', GL: 'GL', BI: 'BI', IDSIT: 'IDSIT', IDF: 'IDF', SSE: 'SSE', SSI: 'SSI', IIA: 'IIA', SSCL: 'SSCL', GD: 'GD' }[
+                    etudiant.filere ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ etudiant.enrollmentDate | formatMediumDate }}</td>
+              <td>
+                @if (etudiant.classe) {
+                  <div>
+                    <a [routerLink]="['/classe', etudiant.classe.id, 'view']">{{ etudiant.classe.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/etudiant', etudiant.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/etudiant', etudiant.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(etudiant)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (matiere()) {
+      <div>
+        <h2 data-cy="matiereDetailsHeading"><span jhiTranslate="agileProjectApp.matiere.detail.title">Matiere</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ matiere()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.matiere.subjectName">Subject Name</span></dt>
+          <dd>
+            <span>{{ matiere()!.subjectName }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.matiere.description">Description</span></dt>
+          <dd>
+            <span>{{ matiere()!.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="agileProjectApp.matiere.professeur">Professeur</span></dt>
+          <dd>
+            @if (matiere()!.professeur) {
+              <div>
+                <a [routerLink]="['/professeur', matiere()!.professeur?.id, 'view']">{{ matiere()!.professeur?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/matiere', matiere()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

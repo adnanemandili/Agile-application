@@ -1,0 +1,146 @@
+<div>
+  <h2 id="page-heading" data-cy="ClasseHeading">
+    <span jhiTranslate="agileProjectApp.classe.home.title">Classes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="agileProjectApp.classe.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-classe"
+        [routerLink]="['/classe/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="agileProjectApp.classe.home.createLabel">Create a new Classe</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (classes?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="agileProjectApp.classe.home.notFound">No Classes found</span>
+    </div>
+  }
+
+  @if (classes && classes.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="className">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.classe.className">Class Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="level">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.classe.level">Level</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="group">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.classe.group">Group</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="niveau">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.classe.niveau">Niveau</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="filere">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.classe.filere">Filere</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="professeur.id">
+              <div class="d-flex">
+                <span jhiTranslate="agileProjectApp.classe.professeur">Professeur</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (classe of classes; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/classe', classe.id, 'view']">{{ classe.id }}</a>
+              </td>
+              <td>{{ classe.className }}</td>
+              <td>{{ classe.level }}</td>
+              <td [jhiTranslate]="'agileProjectApp.Groupe.' + (classe.group ?? 'null')">
+                {{ { null: '', G1: 'G1', G2: 'G2', G3: 'G3', G4: 'G4', G5: 'G5', G6: 'G6', G7: 'G7', G8: 'G8' }[classe.group ?? 'null'] }}
+              </td>
+              <td [jhiTranslate]="'agileProjectApp.Niveau.' + (classe.niveau ?? 'null')">
+                {{
+                  { null: '', PermiereAnnee: 'PermiereAnnee', DeusiemeAnnee: 'DeusiemeAnnee', TroisiemeAnnee: 'TroisiemeAnnee' }[
+                    classe.niveau ?? 'null'
+                  ]
+                }}
+              </td>
+              <td [jhiTranslate]="'agileProjectApp.Filiere.' + (classe.filere ?? 'null')">
+                {{
+                  { null: '', GL: 'GL', BI: 'BI', IDSIT: 'IDSIT', IDF: 'IDF', SSE: 'SSE', SSI: 'SSI', IIA: 'IIA', SSCL: 'SSCL', GD: 'GD' }[
+                    classe.filere ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>
+                @for (professeur of classe.professeurs; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/professeur', professeur.id, 'view']">{{ professeur.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/classe', classe.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/classe', classe.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(classe)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

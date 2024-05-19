@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "changelogDate": "20240519163635"
+  },
+  "applications": "*",
+  "documentation": "L'entité Classe.",
+  "fields": [
+    {
+      "fieldName": "className",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "level",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "group",
+      "fieldType": "Groupe",
+      "fieldValues": "G1,G2,G3,G4,G5,G6,G7,G8"
+    },
+    {
+      "fieldName": "niveau",
+      "fieldType": "Niveau",
+      "fieldValues": "PermiereAnnee,DeusiemeAnnee,TroisiemeAnnee"
+    },
+    {
+      "fieldName": "filere",
+      "fieldType": "Filiere",
+      "fieldValues": "GL,BI,IDSIT,IDF,SSE,SSI,IIA,SSCL,GD"
+    }
+  ],
+  "name": "Classe",
+  "relationships": [
+    {
+      "otherEntityName": "etudiant",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "etudiant",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "professeur",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "professeur",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}
